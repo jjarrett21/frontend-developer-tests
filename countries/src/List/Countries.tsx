@@ -112,3 +112,5 @@ export const CountriesList: FC = () => {
     </div>
   );
 };
+
+CountriesList.displayName = "CountriesList";
