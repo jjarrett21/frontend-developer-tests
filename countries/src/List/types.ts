@@ -1,3 +1,4 @@
+// Types file
 export interface Country {
     results: Result[];
     
