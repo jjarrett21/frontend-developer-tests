@@ -73,13 +73,13 @@ export const CountriesList: FC = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1" key={"male"} eventKey="male">
+            <Dropdown.Item  key={"male"} eventKey="male">
               Male
             </Dropdown.Item>
-            <Dropdown.Item href="#/action-2" key={"female"} eventKey="female">
+            <Dropdown.Item  key={"female"} eventKey="female">
               Female
             </Dropdown.Item>
-            <Dropdown.Item href="#/action-2" key={"all"} eventKey="all">
+            <Dropdown.Item  key={"all"} eventKey="all">
               All
             </Dropdown.Item>
           </Dropdown.Menu>
