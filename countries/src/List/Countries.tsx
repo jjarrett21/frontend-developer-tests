@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import { useGetCountries } from "./countries-api";
-import { orderBy } from "lodash";
-import { uniq } from "lodash";
+import sortBy from "lodash/fp/sortBy";
 import ListGroup from "react-bootstrap/ListGroup";
 import Table from "react-bootstrap/Table";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -20,10 +19,14 @@ export const CountriesList: FC = () => {
   // Our data
   const results = data?.results;
 
-  // List of coutries, without duplicates orderedBy name
-  const countries = orderBy(uniq(results?.map((l) => l.location.country)));
+  const countriesList = results?.map((c) => c.location.country);
 
-  // Our handler for selecting a country
+  const singleCountries = [...new Set(countriesList)];
+
+  const sortedCountries = singleCountries
+    .sort((a, b) => Number(a) - Number(b))
+    .reverse();
+
   const handleCountrySelected = (nextCountry: string) => () => {
     setCountry(nextCountry);
   };
@@ -55,7 +58,7 @@ export const CountriesList: FC = () => {
     <div>
       <ListGroup variant="flush">
         {!loading &&
-          countries?.map((c) => (
+          sortedCountries?.map((c) => (
             <ListGroup.Item
               action
               variant="dark"
@@ -73,13 +76,13 @@ export const CountriesList: FC = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item  key={"male"} eventKey="male">
+            <Dropdown.Item key={"male"} eventKey="male">
               Male
             </Dropdown.Item>
-            <Dropdown.Item  key={"female"} eventKey="female">
+            <Dropdown.Item key={"female"} eventKey="female">
               Female
             </Dropdown.Item>
-            <Dropdown.Item  key={"all"} eventKey="all">
+            <Dropdown.Item key={"all"} eventKey="all">
               All
             </Dropdown.Item>
           </Dropdown.Menu>
@@ -97,8 +100,8 @@ export const CountriesList: FC = () => {
             </tr>
           </thead>
           <tbody>
-            {whichData?.map((u) => (
-              <tr key={u.id.value}>
+            {sortBy("registered.date", whichData)?.map((u) => (
+              <tr key={u.login.uuid}>
                 <td>{u.name.title + " " + u.name.first + " " + u.name.last}</td>
                 <td>{u.gender}</td>
                 <td>{u.location.city}</td>
