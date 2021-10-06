@@ -100,15 +100,19 @@ export const CountriesList: FC = () => {
             </tr>
           </thead>
           <tbody>
-            {sortBy("registered.date", whichData)?.map((u) => (
-              <tr key={u.login.uuid}>
-                <td>{u.name.title + " " + u.name.first + " " + u.name.last}</td>
-                <td>{u.gender}</td>
-                <td>{u.location.city}</td>
-                <td>{u.location.state}</td>
-                <td>{format(new Date(u.registered.date), "MM/dd/yyyy")}</td>
-              </tr>
-            ))}
+            {sortBy("registered.date", whichData)
+              ?.reverse()
+              .map((u) => (
+                <tr key={u.login.uuid}>
+                  <td>
+                    {u.name.title + " " + u.name.first + " " + u.name.last}
+                  </td>
+                  <td>{u.gender}</td>
+                  <td>{u.location.city}</td>
+                  <td>{u.location.state}</td>
+                  <td>{format(new Date(u.registered.date), "MM/dd/yyyy")}</td>
+                </tr>
+              ))}
           </tbody>
         </Table>
       </div>
